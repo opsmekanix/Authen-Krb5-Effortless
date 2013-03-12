@@ -3,17 +3,16 @@ use 5.10.1;
 use strict;
 use warnings;
 
-
 package Authen::Krb5::Effortless;
-our $VERSION="0.01";
+our $VERSION = "0.01";
 use Carp;
 use parent qw(Authen::Krb5);
 
 sub new {
     my $class = shift();
     my $self  = {};
-    my $a = Authen::Krb5::init_context();                                    # initialize module
-    if ( !$a) { confess( "Unable to initialize Authen::Krb5 module" ); }   
+    my $a     = Authen::Krb5::init_context();    # initialize module
+    if ( !$a ) { confess( "Unable to initialize Authen::Krb5 module" ); }
     bless( $self, $class );
     return $self;
 }
@@ -21,8 +20,8 @@ sub new {
 sub read_cache {
     my $self = shift();
     my ( $cc, $cache_pointer, $cache_object );
-    $cc            = Authen::Krb5::cc_default();                                              # load krb5 cache into mem
-    $cache_pointer = $cc->start_seq_get();                                                    # create a cache pointer
+    $cc            = Authen::Krb5::cc_default();    # load krb5 cache into mem
+    $cache_pointer = $cc->start_seq_get();          # create a cache pointer
     if ( $cache_pointer ) {
         $cache_object            = $cc->next_cred( $cache_pointer );    # fetch copy of object from cache
         $self->{'cache_present'} = 1;                                   # flag to show cache is found
@@ -38,12 +37,12 @@ sub read_cache {
 }
 
 sub clear_cache {
-    my $self = shift();                                                    # clear cache if it exists
+    my $self = shift();                                                 # clear cache if it exists
     my ( $cc );
-    $cc = Authen::Krb5::cc_default() or confess ("KRB5 Cache error:", Authen::Krb5::error() );                                              
-    if ( $cc ) { 
-        $cc->destroy() or carp ("KRB5 Cache warn: ", Authen::Krb5::error() );
-    } 
+    $cc = Authen::Krb5::cc_default() or confess( "KRB5 Cache error:", Authen::Krb5::error() );
+    if ( $cc ) {
+        $cc->destroy() or carp( "KRB5 Cache warn: ", Authen::Krb5::error() );
+    }
 
     return "True";
 
@@ -54,19 +53,19 @@ sub fetch_TGT_KEYTAB {
     my $keytab   = shift();
     my $username = shift();
     my ( $TGT, $cc, $principal );
-    $keytab = Authen::Krb5::kt_resolve( $keytab );                              # load keytab into mem
+    $keytab = Authen::Krb5::kt_resolve( $keytab );    # load keytab into mem
     if ( !$keytab ) { croak( "KRB5 Keytab error: ", Authen::Krb5::error() ); }
 
-    $cc = Authen::Krb5::cc_default();                                           # initialize default cache
+    $cc = Authen::Krb5::cc_default();                 # initialize default cache
     if ( !$cc ) { croak( "KRB5 Cache error: ", Authen::Krb5::error() ); }
 
-    $principal = Authen::Krb5::parse_name( $username );                         # initialize principal name
+    $principal = Authen::Krb5::parse_name( $username );    # initialize principal name
     if ( !$principal ) { croak( "KRB5 Principal error: ", Authen::Krb5::error() ); }
 
-    $TGT = Authen::Krb5::get_init_creds_keytab( $principal, $keytab );          # Fetch TGT
+    $TGT = Authen::Krb5::get_init_creds_keytab( $principal, $keytab );    # Fetch TGT
     if ( !$TGT ) { croak( "KRB5 TGT error: ", Authen::Krb5::error() ); }
 
-    $cc->initialize( $principal );                                              # store TGT
+    $cc->initialize( $principal );                                        # store TGT
     Authen::Krb5::Ccache::store_cred( $cc, $TGT );
     return "True";
 }
@@ -77,13 +76,13 @@ sub fetch_TGT_PW {
     my $username = shift();
     my ( $TGT, $cc, $principal );
 
-    $cc = Authen::Krb5::cc_default();    # initialize default cache
+    $cc = Authen::Krb5::cc_default();                                     # initialize default cache
     if ( !$cc ) { croak( "KRB5 Cache error: ", Authen::Krb5::error() ); }
 
-    $principal = Authen::Krb5::parse_name( $username );    # initialize principal name
+    $principal = Authen::Krb5::parse_name( $username );                   # initialize principal name
     if ( !$principal ) { croak( "KRB5 Principal error: ", Authen::Krb5::error() ); }
 
-    $TGT = Authen::Krb5::get_init_creds_password( $principal, $pw );    # Fetch TGT
+    $TGT = Authen::Krb5::get_init_creds_password( $principal, $pw );      # Fetch TGT
     if ( !$TGT ) { croak( "KRB5 TGT error: ", Authen::Krb5::error() ); }
 
     # store TGT
@@ -91,7 +90,6 @@ sub fetch_TGT_PW {
     Authen::Krb5::Ccache::store_cred( $cc, $TGT );
     return "True";
 }
-
 
 return 1;
 
@@ -107,53 +105,37 @@ Version 0.01
 
 =cut
 
-
 =head1 Description
 
 Authen::Krb5::Effortless is more then a 'Simple' module, as it supports both passphrase and keytab based authorization.   
 
+=head1 Methods
+
 =over 3
 
-=item * 
+=item new()              - Initializes Authen::Krb5  and returns a Authen::Krb5::Effortless object.
 
-fetch_TGT_KEYTAB - Will use a keytab file to get a Kerberos credential.  The cache location is usually specified by the shell environment $KRB5CCNAME.
+=item fetch_TGT_KEYTAB() - Uses a keytab file to get a Kerberos credential.
 
-=item * 
+=item fetch_TGT_PW()     - Will use a password to get and cache a Kerberos credential.
 
-fetch_TGT_PW - Will use a password to get and cache a Kerberos credential.  The cache location will be specified by the shell environment $KRB5CCNAME.   
+=item clear_cache()      - Will clear your local cache of all stored principals.
 
-=item * 
-
-clear_cache -  Will clear your local cache of all stored principals.
-
-=item * 
-
-read_cache -  Will read your local cache file and return several values about the cache in a hash. All timestamps are listed in epoch time and are as follows:
+=item read_cache()       - Will read your Kerberos  cache and return the following values from the cache:
 
 =over 6
 
-=item * 
+=item cache_present:   returns 0 or 1 if the cache is present
 
-cache_present:   0 or 1
+=item starttime:       epoch time when ticket is good from  
 
-=item * 
+=item authtime:        epoch time when authentication occured 
 
-starttime:        when the ticket is good from 
+=item endtime:         epoch time when the ticket expires 
 
-=item * 
-
-authtime:         when the authentication occured 
-
-=item * 
-
-endtime:          when the ticket expires 
-
-=item * 
-
-principal:        name of the principal that the cache is valid
+=item principal:       name of the principal contained in the cache
 
 =back
-
 
 =back
 
@@ -198,8 +180,7 @@ Adam Faris, C<< <authen-krb5-effortless at mekanix dot org> >>
 
 =head1 BUGS
 
-Please report any bugs or feature requests to L<http://github/blah>
-
+Bugs are tracked at github.  Please report any bugs to L<https://github.com/opsmekanix/Authen-Krb5-Effortless/issues>
 
 =head1 SUPPORT
 
@@ -211,10 +192,6 @@ You can find documentation for this module with the perldoc command.
 You can also look for information at:
 
 =over 4
-
-=item * RT: CPAN's request tracker (report bugs here)
-
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Authen-Krb5-Effortless>
 
 =item * AnnoCPAN: Annotated CPAN documentation
 
