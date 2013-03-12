@@ -1,16 +1,8 @@
 Authen-Krb5-Effortless
 
-The README is used to introduce the module and provide instructions on
-how to install the module, any machine dependencies it may have (for
-example C compilers and installed libraries) and any other information
-that should be provided before the module is installed.
-
-A README file is required for CPAN modules since CPAN extracts the README
-file from a module distribution so that people browsing the archive
-can use it to get an idea of the module's uses. It is usually a good idea
-to provide version information here so that people can decide whether
-fixes for the module are worth downloading.
-
+This module is a subclass to Authen::Krb5, and adds an 'Effortless' interface to authenticate against a KDC server.  It's intention is to provide a kinder
+means of integrating Kerberos tickets with your application.   While there is Authen::Krb5::Simple, Authen::Krb5::Simpledoesn't support keytab authentication.
+As I really needed both passphrase and keytab authentication, I wrote a module to subclass Authen::Krb5.  I hope someone finds this module helpful.
 
 INSTALLATION
 
@@ -30,8 +22,8 @@ perldoc command.
 
 You can also look for information at:
 
-    RT, CPAN's request tracker (report bugs here)
-        http://rt.cpan.org/NoAuth/Bugs.html?Dist=Authen-Krb5-Effortless
+    Bugs and feature requests
+        https://github.com/opsmekanix/Authen-Krb5-Effortless/issues
 
     AnnoCPAN, Annotated CPAN documentation
         http://annocpan.org/dist/Authen-Krb5-Effortless
