@@ -174,6 +174,10 @@ A example for deleting the cache:
   my $krb5  = KRB5_KeyAuth->new();
   $krb5->clear_cache();
 
+=head1 REQUIREMENETS
+
+Authen::Krb5 needs to be installed for this module to work.  In addition, because I'm using a pragma introduced with perl 5.10.1, I am requireing the use of perl 5.10.1 or newer. 
+
 =head1 AUTHOR
 
 Adam Faris, C<< <authen-krb5-effortless at mekanix dot org> >> 

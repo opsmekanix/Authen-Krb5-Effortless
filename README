@@ -4,6 +4,12 @@ This module is a subclass to Authen::Krb5, and adds an 'Effortless' interface to
 means of integrating Kerberos tickets with your application.   While there is Authen::Krb5::Simple, Authen::Krb5::Simpledoesn't support keytab authentication.
 As I really needed both passphrase and keytab authentication, I wrote a module to subclass Authen::Krb5.  I hope someone finds this module helpful.
 
+REQUIREMENETS
+
+Carp is used for warnings and errors.
+Authen::Krb5 needs to be installed as this is a subclass.  
+In addition, because I'm using a pragma introduced with perl 5.10.1, I am enforcing the use of that version.   
+
 INSTALLATION
 
 To install this module, run the following commands:
