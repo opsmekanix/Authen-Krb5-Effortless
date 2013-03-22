@@ -145,7 +145,7 @@ A keytab example:
   use Authen::Krb5::Effortless;
   my $username  =  getlogin();                            
   my $keytab    =  "/path/to/my/keytab";
-  my $krb5      =  KRB5_KeyAuth->new();
+  my $krb5      =  Authen::Krb5::Effortless->new();
   $krb5->fetch_TGT_KEYTAB($keytab, $username);
 
 
@@ -153,14 +153,14 @@ A password example:
 
   use Authen::Krb5::Effortless;
   my $username = getlogin();
-  my $krb5   = KRB5_KeyAuth->new();
+  my $krb5   = Authen::Krb5::Effortless->new();
   $krb5->fetch_TGT_PW('sekret_phss_wurd', $username);
 
 
 A example for reading cache:
 
   use Authen::Krb5::Effortless;
-  my $krb5  = KRB5_KeyAuth->new();
+  my $krb5  = Authen::Krb5::Effortless->new();
   $krb5->read_cache();
   if ($krb5->{'cache_present'}) { 
     print $krb5->{'principal'}, "\n";
@@ -170,7 +170,7 @@ A example for reading cache:
 A example for deleting the cache:
 
   use Authen::Krb5::Effortless;
-  my $krb5  = KRB5_KeyAuth->new();
+  my $krb5  = Authen::Krb5::Effortless->new();
   $krb5->clear_cache();
 
 =head1 REQUIREMENETS
