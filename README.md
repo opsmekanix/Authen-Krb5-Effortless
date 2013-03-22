@@ -1,14 +1,25 @@
 Authen-Krb5-Effortless
 
-This module is a subclass to Authen::Krb5, and adds an 'Effortless' interface to authenticate against a KDC server.  It's intention is to provide a kinder
-means of integrating Kerberos tickets with your application.   While there is Authen::Krb5::Simple, Authen::Krb5::Simpledoesn't support keytab authentication.
-As I really needed both passphrase and keytab authentication, I wrote a module to subclass Authen::Krb5.  I hope someone finds this module helpful.
+This module is a subclass to Authen::Krb5, and adds an 'Effortless' interface 
+to authenticate against a Kerberos Domain Control server.  
+It's intention is to provide a kinder means of integrating Kerberos tickets 
+with your application.   While there is Authen::Krb5::Simple, 
+Authen::Krb5::Simple doesn't support keytab authentication.  
+
+As I really needed both passphrase and keytab authentication, I wrote a 
+module to subclass Authen::Krb5.  After releasing this module to CPAN, I 
+became aware of Authen::Krb5::Easy and that it supports keytab for 
+authentication.  I still belive Authen::Krb5::Effortless has merit as it 
+combines both keytab and passphrase authentication in a single module.  
 
 REQUIREMENETS
 
 Carp is used for warnings and errors.
 Authen::Krb5 needs to be installed as this is a subclass.  
-In addition, because I'm using a pragma introduced with perl 5.10.1, I am enforcing the use of that version.   
+In addition, I'm using the parent pragma introduced with perl 5.10.1. 
+One can download the 'parent' module from CPAN if using earlier 
+versions of perl.  
+
 
 INSTALLATION
 

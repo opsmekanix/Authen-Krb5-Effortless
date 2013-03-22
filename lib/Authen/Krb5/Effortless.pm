@@ -1,10 +1,9 @@
 #!/usr/bin/perl
-use 5.10.1;
 use strict;
 use warnings;
 
 package Authen::Krb5::Effortless;
-our $VERSION = "0.01";
+our $VERSION = "0.02";
 use Carp;
 use parent qw(Authen::Krb5);
 
@@ -97,11 +96,11 @@ return 1;
 
 =head1 NAME
 
-Authen::Krb5::Effortless - This module is a subclass to Authen::Krb5, adding 'Effortless' ways to authenticate against a KDC server.
+Authen::Krb5::Effortless - This module is a subclass to Authen::Krb5, adding 'Effortless' ways to authenticate against a Kerberos Domain Controller.
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =cut
 
