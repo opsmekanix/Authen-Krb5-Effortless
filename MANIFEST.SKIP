@@ -1,9 +1,0 @@
-LICENSE.md
-README.md
-t/boilerplate.t
-.git/*
-_build/*
-BUILD
-MANIFEST.SKIP
-MYMETA.yml
-MYMETA.json
