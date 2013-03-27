@@ -106,7 +106,7 @@ Version 0.02
 
 =head1 Description
 
-Authen::Krb5::Effortless is more then a 'Simple' module, as it supports both passphrase and keytab based authorization.   
+Authen::Krb5::Effortless is more then a 'Simple' module, as it supports both pass-phrase and key-tab based authorization.   
 
 =head1 Methods
 
